@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "build": "elm make src/Main.elm --optimize --output=dist/main.js",
+    "minify": "google-closure-compiler --js dist/main.js --js_output_file dist/main.min.js && mv dist/main.min.js dist/main.js",
+    "start": "live-server"
+  },
+  "devDependencies": {
+    "elm": "0.19.0-no-deps",
+    "google-closure-compiler": "20190729.0.0",
+    "live-server": "1.2.1"
+  }
+}

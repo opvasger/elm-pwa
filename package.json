@@ -1,12 +1,15 @@
 {
   "scripts": {
-    "build": "elm make src/Main.elm --optimize --output=dist/main.js",
-    "minify": "google-closure-compiler --js dist/main.js --js_output_file dist/main.min.js && mv dist/main.min.js dist/main.js",
-    "start": "live-server"
+    "start": "live-server & nodemon --ext elm --exec 'npm run build:elm:dev'",
+    "build": "npm run build:elm && npm run minify:elm",
+    "build:elm": "elm make src/Main.elm --optimize --output=dist/main.js",
+    "minify:elm": "google-closure-compiler --js dist/main.js --js_output_file dist/main.min.js && mv dist/main.min.js dist/main.js",
+    "build:elm:dev": "elm make src/Main.elm --output=dist/main.js"
   },
   "devDependencies": {
     "elm": "0.19.0-no-deps",
     "google-closure-compiler": "20190729.0.0",
-    "live-server": "1.2.1"
+    "live-server": "1.2.1",
+    "nodemon": "1.19.1"
   }
 }

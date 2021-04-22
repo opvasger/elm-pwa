@@ -13,7 +13,7 @@ type alias Flags =
 
 type alias Model =
     { navKey : Browser.Navigation.Key
-    , page : Page
+    , route : Route
     }
 
 
@@ -37,7 +37,7 @@ main =
 init : Flags -> Url -> Browser.Navigation.Key -> ( Model, Cmd Msg )
 init _ url key =
     ( { navKey = key
-      , page = Maybe.withDefault Home (Route.parse route url)
+      , route = Maybe.withDefault Home (Route.parse route url)
       }
     , Cmd.none
     )
@@ -59,7 +59,7 @@ update msg model =
                     )
 
         UrlChanged url ->
-            ( { model | page = Maybe.withDefault model.page (Route.parse route url) }
+            ( { model | route = Maybe.withDefault model.route (Route.parse route url) }
             , Cmd.none
             )
 
@@ -76,7 +76,7 @@ view model =
         [ Element.layout []
             (Element.column []
                 [ viewNavigation
-                , viewPage model.page
+                , viewRoute model.route
                 ]
             )
         ]
@@ -91,15 +91,15 @@ viewNavigation =
 
 
 
--- Page
+-- Route
 
 
-type Page
+type Route
     = Home
     | About
 
 
-route : Route.Parser (Page -> a) a
+route : Route.Parser (Route -> a) a
 route =
     Route.oneOf
         [ Route.map Home Route.top
@@ -107,9 +107,9 @@ route =
         ]
 
 
-viewPage : Page -> Element Msg
-viewPage page =
-    case page of
+viewRoute : Route -> Element Msg
+viewRoute route =
+    case route of
         Home ->
             viewHome
 
